@@ -57,7 +57,7 @@ def upvote(request, product_id):
 
         votante.voters = request.user
         product = get_object_or_404(Product, pk=product_id)
-        votante.publish = product.id
+        votante.publish = product
         product.votes_total += 1
         votante.save()
         product.save()
