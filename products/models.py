@@ -26,7 +26,7 @@ class Product(models.Model):
         return self.pub_date.strftime('%b %e %Y')
 
 class Voter(models.Model):
-    voters = models.ForeignKey(User,on_delete=models.CASCADE)
+    voters = models.ForeignKey(User, on_delete=models.CASCADE)
     publish = models.ForeignKey(Product,
                                 on_delete=models.CASCADE,
                                 default=1)

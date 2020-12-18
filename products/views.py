@@ -52,13 +52,18 @@ def upvote(request, product_id):
     if request.method == 'POST':
         votante = Voter()
 
-        lista_vot = [x for x in Voter.objects.filter(publish = product_id)]
+        lista_vot = [x.voters_id for x in Voter.objects.filter(publish = product_id)]
+        # print(lista_vot[Voter.voters.name])
         print(lista_vot)
-
-        votante.voters = request.user
-        product = get_object_or_404(Product, pk=product_id)
-        votante.publish = product
-        product.votes_total += 1
-        votante.save()
-        product.save()
-        return redirect('/products/' + str(product.id))
+        if request.user.id not in lista_vot:
+            print(lista_vot)
+            votante.voters = request.user.user_id
+            product = get_object_or_404(Product, pk=product_id)
+            votante.publish = product
+            product.votes_total += 1
+            votante.save()
+            product.save()
+            return redirect('/products/' + str(product.id))
+        else:
+            product = get_object_or_404(Product, pk=product_id)
+            return redirect('/products/' + str(product.id))
